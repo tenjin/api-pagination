@@ -47,17 +47,17 @@ module ApiPagination
     private
 
     def paginate_with_pagy(collection, options)
-      if Pagy::VARS[:max_per_page] && options[:per_page] > Pagy::VARS[:max_per_page]
-        options[:per_page] = Pagy::VARS[:max_per_page]
+      if Pagy::DEFAULT[:max_per_page] && options[:per_page] > Pagy::DEFAULT[:max_per_page]
+        options[:per_page] = Pagy::DEFAULT[:max_per_page]
       elsif options[:per_page] <= 0
-        options[:per_page] = Pagy::VARS[:items]
+        options[:per_page] = Pagy::DEFAULT[:limit]
       end
 
       pagy = pagy_from(collection, options)
       collection = if collection.respond_to?(:offset) && collection.respond_to?(:limit)
-        collection.offset(pagy.offset).limit(pagy.items)
+        collection.offset(pagy.offset).limit(pagy.limit)
       else
-        collection[pagy.offset, pagy.items]
+        collection[pagy.offset, pagy.limit]
       end
 
       return [collection, pagy]
@@ -70,7 +70,7 @@ module ApiPagination
         count = collection.is_a?(Array) ? collection.count : collection.count(:all)
       end
 
-      Pagy.new(count: count, items: options[:per_page], page: options[:page])
+      Pagy.new(count: count, limit: options[:per_page], page: options[:page])
     end
 
     def pagy_pages_from(pagy)
@@ -102,7 +102,7 @@ module ApiPagination
           offset:      options[:per_page] * (options[:page] - 1),
           total_count: collection.respond_to?(:count) ? collection.count : collection.length
         }
-        collection = Kaminari.paginate_array(collection, paginate_array_options)
+        collection = Kaminari.paginate_array(collection, **paginate_array_options)
       end
 
       collection = collection.page(options[:page]).per(options[:per_page])
