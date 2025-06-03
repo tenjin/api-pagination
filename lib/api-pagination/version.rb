@@ -1,7 +1,7 @@
 module ApiPagination
   class Version
-    MAJOR = 4
-    MINOR = 9
+    MAJOR = 6
+    MINOR = 0
     PATCH = 0
 
     def self.to_s
