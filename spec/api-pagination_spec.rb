@@ -3,24 +3,20 @@ require 'spec_helper'
 describe ApiPagination do
   let(:collection) {(1..100).to_a}
   let(:active_record_relation) {double("ActiveRecord_Relation").as_null_object}
-  let(:paginate_array_options) {{ total_count: 1000 }}
 
   describe "#paginate" do
     if ENV['PAGINATOR'].to_sym == :kaminari
       context 'Using kaminari' do
         describe '.paginate' do
-          it 'should accept paginate_array_options option' do
-            expect(Kaminari).to receive(:paginate_array)
-              .with(collection, **paginate_array_options)
-              .and_call_original
-
-            ApiPagination.paginate(
+          it 'uses the array total and paginates the requested page' do
+            paginated_collection = ApiPagination.paginate(
               collection,
-              {
-                per_page: 30,
-                paginate_array_options: paginate_array_options
-              }
-            )
+              page: 2,
+              per_page: 30
+            ).first
+
+            expect(paginated_collection.total_count).to eq(100)
+            expect(paginated_collection.to_a).to eq((31..60).to_a)
           end
 
           context 'configured not to include the total' do

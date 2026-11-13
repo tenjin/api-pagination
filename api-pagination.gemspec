@@ -24,8 +24,9 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec', '~> 3.10'
   s.add_development_dependency 'grape', '~> 1.6'
-  s.add_development_dependency 'railties', '~> 6.1', '>= 6.1.4.1'
-  s.add_development_dependency 'actionpack', '~> 6.1', '>= 6.1.4.1'
+  s.add_development_dependency 'railties', '~> 8.0.5', '>= 8.0.5.2'
+  s.add_development_dependency 'actionpack', '~> 8.0.5', '>= 8.0.5.2'
+  s.add_development_dependency 'rack', '~> 2.2', '>= 2.2.25'
   s.add_development_dependency 'sequel', '~> 5.49'
-  s.add_development_dependency 'activerecord-nulldb-adapter', '~> 0.7.0'
+  s.add_development_dependency 'activerecord-nulldb-adapter', '~> 1.2', '>= 1.2.2'
 end

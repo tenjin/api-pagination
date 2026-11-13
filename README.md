@@ -202,6 +202,23 @@ Kaminari.configure do |config|
 end
 ```
 
+## Development
+
+The development bundle requires Ruby 3.2 or later and uses Rails 8.0.5.2
+or later on the 8.0 branch, with Rack at least 2.2.25. These are development
+dependencies only: the published gem's Ruby requirement and supported
+paginator APIs are unchanged, and consuming applications choose their own
+Rails and Rack versions.
+
+Run the local-only consumer and unit suites for each supported paginator:
+
+```sh
+bundle install
+PAGINATOR=pagy bundle exec rspec
+PAGINATOR=kaminari bundle exec rspec
+PAGINATOR=will_paginate bundle exec rspec
+```
+
 [activeadmin]: https://github.com/activeadmin/activeadmin
 [kaminari]: https://github.com/amatsuda/kaminari
 [will_paginate]: https://github.com/mislav/will_paginate

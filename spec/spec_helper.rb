@@ -1,3 +1,4 @@
+require 'logger'
 require 'support/numbers_controller'
 require 'support/numbers_api'
 require 'api-pagination'
