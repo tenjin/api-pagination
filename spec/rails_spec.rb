@@ -245,7 +245,7 @@ describe NumbersController, :type => :controller do
     if [:will_paginate, :kaminari].include?(ApiPagination.config.paginator.to_sym)
       context 'default per page in model' do
         before do
-          class Fixnum
+          class Integer
             @default_per_page = 6
             @per_page = 6
 
@@ -256,14 +256,14 @@ describe NumbersController, :type => :controller do
         end
 
         after do
-          class Fixnum
+          class Integer
             @default_per_page = 25
             @per_page = 25
           end
         end
 
         after :all do
-          class Fixnum
+          class Integer
             class << self
               undef_method :default_per_page, :per_page
             end
@@ -277,7 +277,7 @@ describe NumbersController, :type => :controller do
         end
 
         it 'should not fail if the model yields nil for per page' do
-          class Fixnum
+          class Integer
             @default_per_page = nil
             @per_page = nil
           end
